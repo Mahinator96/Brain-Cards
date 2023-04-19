@@ -155,7 +155,7 @@ export const createEditCategory = (app) => {
 
   // Удаление всех категорий
   const unmount = () => {
-    app.remove(editCategory);
+    editCategory.remove();
   };
 
   return {unmount, mount };
