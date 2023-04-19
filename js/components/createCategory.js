@@ -64,12 +64,12 @@ export const createCategory = (app) => {
   const mount = (data) => {
     // Очистка ul.category__list от li
     categoryList.textContent = '';
-    // Добавление в main.app => section.category.section-offset
-    app.append(category);
     // Создание массива из li элементов столько раз, сколько есть данных в data
     const cards = data.map(createCategoryCard);
     // Добавить в ul.category__list все li элемента массива через spread (spred - перечисляет через запятую)
     categoryList.append(...cards);
+    // Добавление в main.app => section.category.section-offset
+    app.append(category);
   }
 
   // Функция которая убирает section.category.section-offset с страницы
