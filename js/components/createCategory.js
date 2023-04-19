@@ -1,4 +1,5 @@
 import { createElement } from "../helper/createElement.js";
+import { declOfNum } from "../helper/declOfNumber.js";
 
 // Ф-ия создания категорий
 export const createCategory = (app) => {
@@ -38,20 +39,21 @@ export const createCategory = (app) => {
         // Создание button.category__card>span.category__pairs
         const categoryPairs = createElement('span', {
           className: 'category__pairs',
-          textContent: `${data.length} пар`,
+          textContent: declOfNum(data.length, ['пара', 'пары', 'пар']),
         })
         // Добавление в categoryCard => categoryTitle, categoryPairs
         categoryCard.append(categoryTitle, categoryPairs);
         // Создание button.category__btn category__edit[aria-label="редактировать"]
         const categoryEdit = createElement('button', {
           className: 'category__btn category__edit',
+          ariaLabel: 'редактировать',
         });
-        categoryEdit.setAttribute('aria-label', 'редактировать');
+
         // Создание button.category__btn category__del[aria-label="удалить"]
         const categoryDel = createElement('button', {
           className: 'category__btn category__del',
+          ariaLabel: 'удалить',
         });
-        categoryEdit.setAttribute('aria-label', 'удалить');
 
         // Добавление в item => categoryCard, categoryEdit, categoryDel
         item.append(categoryCard, categoryEdit, categoryDel);
@@ -64,12 +66,12 @@ export const createCategory = (app) => {
   const mount = (data) => {
     // Очистка ul.category__list от li
     categoryList.textContent = '';
-    // Добавление в main.app => section.category.section-offset
-    app.append(category);
     // Создание массива из li элементов столько раз, сколько есть данных в data
     const cards = data.map(createCategoryCard);
     // Добавить в ul.category__list все li элемента массива через spread (spred - перечисляет через запятую)
     categoryList.append(...cards);
+    // Добавление в main.app => section.category.section-offset
+    app.append(category);
   }
 
   // Функция которая убирает section.category.section-offset с страницы

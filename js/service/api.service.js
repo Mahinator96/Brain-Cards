@@ -22,3 +22,26 @@ export const fetchCategories = async () => {
     return { error };
   }
 };
+
+// Ф-ия которая производит запрос к серверу для получения списка категорий
+export const fetchCards = async (id) => {
+// При успешном запросе
+try { 
+  // Ответ от сервера - response
+  const response = await fetch(`${API_URL}/api/category/${id}`);
+
+  if(response.status === 200 || response.status === 201) {
+    // Преобразование данных в массив или объект
+    const cards = await response.json();
+    return cards;
+  } else {
+    const error = await response.json();
+    // Прерывание функции
+    throw error;
+  }
+  }
+  // При неудачном запросе
+  catch (error) {
+    return { error };
+  }
+};

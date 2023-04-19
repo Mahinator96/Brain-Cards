@@ -1,18 +1,25 @@
 import { app, headerParent } from "./elem.js";
-import { createHeader } from "./components/createHeader.js";
-import { fetchCategories } from "./service/api.service.js";
 import { createCategory } from "./components/createCategory.js";
+import { createEditCategory } from "./components/createEditCategory.js";
+import { createHeader } from "./components/createHeader.js";
 import { createElement } from "./helper/createElement.js";
+import { fetchCards, fetchCategories } from "./service/api.service.js";
 // Ф-ия асинхронная - чтобы получить данные с сервера
 const initApp = async () => {
   // Запись в константу всех возвращаемых из функции элементов и функций
   const headerObj = createHeader(headerParent);
   const categoryObj = createCategory(app);
+  const editCategoryObj = createEditCategory(app);
+  // Убрать все категории 
+  const allSectionUnmount = () => {
+    [categoryObj, editCategoryObj].forEach(obj => obj.unmount());
+  }
 
   // Функция добавляет все категории на страницу 
   const renderIndex = async (e) => {
     // Добавление preventDefault тогда - когда он есть, чтобы не было ошибки
     e?.preventDefault();
+    allSectionUnmount();
     // Получение данных списка категорий из сервера
     const categories = await fetchCategories();
     // Если запрос вернул ошибку - создать p.server-error{Ошибка...} в .app
@@ -36,8 +43,28 @@ const initApp = async () => {
 
   // При клике на headerBtn - изменяет содержимое headerTitle
   headerObj.headerBtn.addEventListener('click', () => {
-    categoryObj.unmount();
-    headerObj.updateHeaderTitle('Новая категория')
+    allSectionUnmount();
+    headerObj.updateHeaderTitle('Новая категория');
+    editCategoryObj.mount();
+  });
+  // При нажатии на ul.category__list
+  categoryObj.categoryList.addEventListener('click', async ({target}) => {
+    // При клике на li.category__item
+    const categoryItem = target.closest('.category__item');
+
+    // Если клик был на li.category__item
+    if (target.closest('.category__edit')) {
+      // Получить данные о категории 
+      const dataCards = await fetchCards(categoryItem.dataset.id);
+      // Удалить всё с страницы
+      allSectionUnmount();
+      // Изменить заголовок
+      headerObj.updateHeaderTitle('Редактирование');
+      // Собрать таблицу из полученных данных
+      editCategoryObj.mount(dataCards);
+      
+      return;
+    }
   });
 };
 
