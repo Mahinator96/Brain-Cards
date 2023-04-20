@@ -126,7 +126,7 @@ export const createEditCategory = (app) => {
   // При ухода с фокуса h2.edit__title происходит его заполнение содержимым, или автоматически заполняется const TITLTE
   title.addEventListener('blur', checkTitle);
   
-
+  const emptyRow = createTRCell(['', '']);
   
   btnAddRow.addEventListener('click', () => {
     const emptyRow = createTRCell(['', '']);
@@ -157,8 +157,7 @@ export const createEditCategory = (app) => {
 
   // Удаление всех категорий
   const unmount = () => {
-    // editCategory.remove();
-    app.remove(editCategory);
+    editCategory.remove();
   };
 
   return {unmount, mount };
