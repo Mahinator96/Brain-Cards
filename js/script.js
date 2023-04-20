@@ -4,6 +4,7 @@ import { createEditCategory } from "./components/createEditCategory.js";
 import { createHeader } from "./components/createHeader.js";
 import { createElement } from "./helper/createElement.js";
 import { fetchCards, fetchCategories } from "./service/api.service.js";
+import { createPairs } from "./components/createPairs.js";
 // Ф-ия асинхронная - чтобы получить данные с сервера
 const initApp = async () => {
   // Запись в константу всех возвращаемых из функции элементов и функций
