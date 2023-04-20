@@ -55,7 +55,7 @@ const initApp = async () => {
     // При клике на li.category__item
     const categoryItem = target.closest('.category__item');
 
-    // Если клик был на li.category__item
+    // Если клик был на button.category__btn.category__edit
     if (target.closest('.category__edit')) {
       // Получить данные о категории 
       const dataCards = await fetchCards(categoryItem.dataset.id);
@@ -68,7 +68,25 @@ const initApp = async () => {
       
       return;
     }
+    // Если клик был на button.category__btn.category__del
+    if (target.closest('.category__del')) {
+      console.log('Удалить');
+
+      return;
+    }
+    // Если клик просто на карточке
+    if (categoryItem) {
+      const dataCards = await fetchCards(categoryItem.dataset.id);
+      
+      allSectionUnmount();
+
+      headerObj.updateHeaderTitle(dataCards.title);
+
+      pairsObj.mount(dataCards);
+    }
   });
+
+  pairsObj.buttonReturn.addEventListener('click', renderIndex);
 };
 
 initApp();
