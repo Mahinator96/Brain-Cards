@@ -125,10 +125,11 @@ export const createEditCategory = (app) => {
   title.addEventListener('focus', clearTitle);
   // При ухода с фокуса h2.edit__title происходит его заполнение содержимым, или автоматически заполняется const TITLTE
   title.addEventListener('blur', checkTitle);
+  
 
-  const emptyRow = createTRCell(['', '']);
   
   btnAddRow.addEventListener('click', () => {
+    const emptyRow = createTRCell(['', '']);
     tbody.append(emptyRow); 
   });
   
@@ -147,6 +148,7 @@ export const createEditCategory = (app) => {
 
     // Создание tr для для каждого элемента массива pairs
     const rows = data.pairs.map(createTRCell);
+    const emptyRow = createTRCell(['', '']);
     // Добавление в tbody => массив созданных tr
     tbody.append(...rows, emptyRow);
 
@@ -155,7 +157,8 @@ export const createEditCategory = (app) => {
 
   // Удаление всех категорий
   const unmount = () => {
-    editCategory.remove();
+    // editCategory.remove();
+    app.remove(editCategory);
   };
 
   return {unmount, mount };

@@ -10,9 +10,11 @@ const initApp = async () => {
   const headerObj = createHeader(headerParent);
   const categoryObj = createCategory(app);
   const editCategoryObj = createEditCategory(app);
+  const pairsObj = createPairs(app);
+
   // Убрать все категории 
   const allSectionUnmount = () => {
-    [categoryObj, editCategoryObj].forEach(obj => obj.unmount());
+    [categoryObj, editCategoryObj, pairsObj].forEach(obj => obj.unmount());
   }
 
   // Функция добавляет все категории на страницу 
