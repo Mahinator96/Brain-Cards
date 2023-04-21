@@ -54,7 +54,8 @@ export const createEditCategory = (app) => {
   // Создание button.edit__btn.edit__save{Сохранить}
   const btnSave = createElement('button', {
     className: 'edit__btn edit__save',
-    textContent: 'Сохранить',
+    textContent: 'Сохранить категорию',
+    // dataID: app.id,
   }); 
   // Создание button.edit__btn edit__cancel{Отмена}
   const btnCancel = createElement('button', {
@@ -132,6 +133,42 @@ export const createEditCategory = (app) => {
     const emptyRow = createTRCell(['', '']);
     tbody.append(emptyRow); 
   });
+
+  // Ф-ия создания новых пар слов
+  const parseData = () => {
+    // Получение нового русского слова
+    const cellsMain = document.querySelectorAll('.table__cell_one');
+    // Получение нового английского слова
+    const cellsSecond = document.querySelectorAll('.table__cell_two'); 
+    // Массив в котором будут храниться пары
+    const pairs = [];
+    // Объект данных для строки из которой будут браться необходимые данные для рендера
+    const data = {
+      pairs: [],
+    };
+    // Проходимся циклом по строке со словами 
+    for (let i = 0; i < cellsMain.length; i++) {
+      // Получаем и очишаем содержимое ячеек
+      const textMain = cellsMain[i].textContent.trim();
+      const texSecond = cellsSecond[i].textContent.trim();
+      // Если две ячейки заполнены
+      if (textMain && texSecond) {
+        // В объект data массива pairs ячейки проходимого циклом числа записывается пара слов 
+        data.pairs[i] = [textMain, texSecond];
+      }
+    };
+    // Если title категории не пустой и не равен болванке - он равен заплненными данными
+    if (title.textContent.trim && title.textContent !== TITLE) {
+      data.title = title.textContent.trim();
+    }
+    // Если у кнопки СОХРАНИТЬ КАТЕГОРИЮ - есть dataset-id
+    if (btnSave.dataset.id) {
+      // Передать в объект data.id - id кнопки
+      data.id = btnSave.dataset.id;
+    }
+
+    return data;
+  };
   
   // Создание категории
   const mount = (data = {title: TITLE, pairs: []}) => {
@@ -151,8 +188,12 @@ export const createEditCategory = (app) => {
     const emptyRow = createTRCell(['', '']);
     // Добавление в tbody => массив созданных tr
     tbody.append(...rows, emptyRow);
+    // Если в базе data есть id - присваиваем его кнопке СОХРАНИТЬ КАТЕГОРИЮ иначе - пустую строку
+    btnSave.dataset.id = data.id ? data.id : '' ;
 
     app.append(editCategory);
+    // Временно
+    parseData();
   };
 
   // Удаление всех категорий
@@ -160,5 +201,5 @@ export const createEditCategory = (app) => {
     editCategory.remove();
   };
 
-  return {unmount, mount };
+  return {unmount, mount, parseData, btnSave, btnCancel};
 }
