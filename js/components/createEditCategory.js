@@ -154,7 +154,7 @@ export const createEditCategory = (app) => {
       // Если две ячейки заполнены
       if (textMain && texSecond) {
         // В объект data массива pairs ячейки проходимого циклом числа записывается пара слов 
-        data.pairs[i] = [textMain, texSecond];
+        data.pairs.push([textMain, texSecond]);
       }
     };
     // Если title категории не пустой и не равен болванке - он равен заплненными данными
