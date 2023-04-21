@@ -40,7 +40,6 @@ export const createPairs = (app) => {
 
   // Ф-ия переворачивания карточки при клике
   const flipCard = () => {
-    console.log(buttonCard.index);
     buttonCard.classList.add('card__item_flipped');
     // Удаляем обработчик (переворачивания карточки), чтобы исправить баг с частым кликом на карточки
     buttonCard.removeEventListener('click', flipCard);
