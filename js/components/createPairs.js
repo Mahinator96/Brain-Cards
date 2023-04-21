@@ -85,10 +85,10 @@ export const createPairs = (app) => {
 
   const mount = (data) => {
     app.append(pairs);
+    
     // Здесь перемешать массив - принимает массив и возвращает новый перемешанный массив
-    const dataShuffle = shuffle(data.pairs);
-    // Ф-ции передаём толькл массив слов
-    cardController(dataShuffle);
+    const newData = shuffle(data.pairs);
+    cardController(newData);
   };
 
   const unmount = () => {

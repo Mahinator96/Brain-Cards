@@ -1,30 +1,17 @@
-export const shuffle = (array) => {
-/* 	var j, temp;
-	for(var i = array.length - 1; i > 0; i--){
-		j = Math.floor(Math.random()*(i + 1));
-		temp = array[j];
-		array[j] = array[i];
-		array[i] = temp;
-	} */
-	return array = array.sort(() => Math.random() - 0.5);
-/* 	var compare = madness();
-	return array.sort(compare); */
-};
-
-/* //вспомогательная функция
-function putToCache(elem, cache){
-	if(cache.indexOf(elem) != -1){
-		return;
+export const shuffle = (arr) => {
+	// Новый массив (копия) - создаётся копия, если ещё понадобится оригинальный массив
+	const array = [...arr];
+// Меняем местами числа массива
+	for(let i = array.length - 1; i > 0; i--) {
+		// Случайное число
+		const j = Math.floor(Math.random() * (i + 1));
+		// Записываем в переменную число цикла из нового массива
+		const a = array[i];
+		// Записываем в ячейку нового массива - число случайного индекса
+		array[i] = array[j]; 
+		// В случайный индекс массива записывается число, которое проходит в данном цикле 
+		array[j] = a;
 	}
-	var i = Math.floor(Math.random()*(cache.length + 1));
-	cache.splice(i, 0, elem);
-}
-
-function madness(){
-	var cache = [];
-	return function(a, b){
-		putToCache(a, cache);
-		putToCache(b, cache);
-		return cache.indexOf(b) - cache.indexOf(a);
-	} */
-// }
+	
+	return array;
+};
